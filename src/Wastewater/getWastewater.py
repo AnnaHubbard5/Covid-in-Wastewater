@@ -23,3 +23,5 @@ results = client.get("2ew6-ywp6", limit=2000)
 
 # Convert to pandas DataFrame
 results_df = pd.DataFrame.from_records(results)
+print("hi")
+
