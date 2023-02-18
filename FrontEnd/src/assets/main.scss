@@ -1,7 +1,9 @@
-$blue: #1212afff;
+@use 'sass:color';
 
 $bg: hsl(35 28% 17% / 100%);
 $fg: hsl(20 22% 77%);
+$lightBg: color.mix($fg, $bg, 20%);
+$textWidth: 480pt;
 
 :root {
   font-family: Arial, sans-serif;
@@ -11,4 +13,64 @@ $fg: hsl(20 22% 77%);
 body {
   margin: 0;
   background: $bg;
+}
+
+select,
+input[type='submit'],
+input[type='text'],
+input[type='email'] {
+  background: transparent;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  color: $fg;
+  border: 1px solid $lightBg;
+  transition: 200ms;
+
+  &:focus {
+    outline: none;
+    border-color: $fg;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.4;
+  }
+}
+
+::placeholder {
+  opacity: 0.4;
+  color: $fg;
+}
+
+$rangeHeight: 0.75rem;
+input[type='range'] {
+  color: red;
+  appearance: none;
+  background: rgba($color: #000000, $alpha: 0.3);
+  height: $rangeHeight;
+  border: 1px solid $lightBg;
+  border-radius: 1000px;
+  overflow: hidden;
+  position: relative;
+}
+::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: $rangeHeight;
+  height: $rangeHeight;
+  border-radius: 50%;
+  background: $bg;
+  cursor: pointer;
+  border: 1px solid $fg;
+
+  box-shadow: -407px 0 0 400px $lightBg;
+}
+
+@mixin hiddenScroll() {
+  overflow: scroll;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    // chrome, safari
+    display: none;
+  }
 }

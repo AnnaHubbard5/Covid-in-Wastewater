@@ -9,6 +9,8 @@
   "dependencies": {
     "@deck.gl/core": "^8.8.24",
     "@deck.gl/layers": "^8.8.24",
+    "@types/qs": "^6.9.7",
+    "qs": "^6.11.0",
     "sass": "^1.58.3",
     "vue": "^3.2.45",
     "vue-router": "4"

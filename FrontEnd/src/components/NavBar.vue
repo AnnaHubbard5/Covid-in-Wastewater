@@ -5,7 +5,7 @@
     <div class="spacer"></div>
     <router-link to="/">Covid in Wastewater</router-link>
     <router-link to="/about">About</router-link>
-    <router-link to="/about">Get Notified</router-link>
+    <router-link to="/notify">Get Notified</router-link>
     <div class="spacer"></div>
   </nav>
 </template>
@@ -24,9 +24,13 @@ nav {
 a {
   text-decoration: none;
   color: $fg;
+  border-bottom: 1pt solid transparent;
+  opacity: 0.8;
 
-  &:hover {
-    border-bottom: 1pt solid;
+  &:hover,
+  &.router-link-active {
+    border-bottom-color: $fg;
+    opacity: 1;
   }
 }
 </style>
