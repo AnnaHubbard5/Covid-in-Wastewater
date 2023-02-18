@@ -7,6 +7,8 @@
 import pandas as pd
 from sodapy import Socrata
 
+
+
 # Unauthenticated client only works with public data sets. Note 'None'
 # in place of application token, and no username or password:
 client = Socrata("data.cdc.gov", None)
@@ -19,7 +21,9 @@ client = Socrata("data.cdc.gov", None)
 
 # First 2000 results, returned as JSON from API / converted to Python list of
 # dictionaries by sodapy.
-results = client.get("2ew6-ywp6", limit=2000)
+results = client.get("2ew6-ywp6", wwtp_jurisdiction = "California", limit = 2)
 
 # Convert to pandas DataFrame
 results_df = pd.DataFrame.from_records(results)
+print("hi")
+
