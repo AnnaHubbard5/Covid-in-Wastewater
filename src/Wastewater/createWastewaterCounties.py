@@ -82,7 +82,7 @@ def getAveragePercentage(county_name, date, limit= None):
             percentile += current
             i += 1
         except Exception as e:
-            print(e)
+            print(str(e) + str(result))
             continue
     
     if i == 0:
@@ -120,7 +120,7 @@ def populateJson(date):
 
 
 if __name__ == "__main__":
-    print(getAveragePercentage("Riverside", "2023-02-18"))
+    print(getAveragePercentage("Santa Clara", "2023-02-18"))
 
     #populateJson("2023-02-18")
     #wwByCounty("Alameda", "2023-02-18")
