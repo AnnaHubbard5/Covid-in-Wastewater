@@ -6,7 +6,6 @@ import Meter from '../components/Meter.vue'
 const email = ref('')
 const county = ref('Select County')
 const threshold = ref(60)
-const meterShown = ref(0)
 
 const error = ref('')
 const dataSent = ref(false)

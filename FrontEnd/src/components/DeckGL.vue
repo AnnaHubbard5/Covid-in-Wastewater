@@ -7,7 +7,7 @@ const props = defineProps<{ modelValue: string }>()
 const emit = defineEmits(['update:modelValue'])
 
 // source: Natural Earth http://www.naturalearthdata.com/ via geojson.xyz
-const CALIFORNIA_COUNTIES = '/data/california-counties.json' //'../public/data/california-counties.json'
+const CALIFORNIA_COUNTIES = '/data/california-counties-prop.json' //'../public/data/california-counties.json'
 
 const COUNTRIES =
   'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_scale_rank.geojson' //eslint-disable-line
@@ -23,33 +23,34 @@ const INITIAL_VIEW_STATE = {
 
 
 function getGradientColor(value: number): Uint8Array{
-  if (value == -1)
-    return Uint8Array.from([0,0,30, 255])
   var distance = value / 100
+  if (value == -1) { 
+    return Uint8Array.from([192,192, 192, 255])
+  }
+  
   // Calculate the color based on the distance
-  if (distance < 0.3) {
+  else if (distance < 0.2) {
     // Green to yellow gradient
-    var r = Math.floor(255 * (distance / 4));
+    var r = Math.floor(255 * distance);
+    var g = 255;
+    var b = 0;
+  } else if (distance < 0.3) {
+    // Yellow to orange gradient
+    var r = Math.floor(255 * distance);
     var g = 255;
     var b = 0;
   } else if (distance < 0.45) {
     // Yellow to orange gradient
-    var r = Math.floor(255 * distance);
-    var g = 244;
+    var r = 255;
+    var g = Math.floor(255 * Math.abs(1 - distance));
     var b = 0;
   } else {
     // Orange to red gradient
     var r = 255;
-    var g = Math.floor(255 *  0.4);
+    var g = 0;
     var b = 0;
   }
   return Uint8Array.from([r, g, b, 255]);
-}
-
-function isClickable(value: number): boolean{
-  if (value == -1) 
-    return false
-  return true;
 }
 
 
@@ -81,7 +82,7 @@ onMounted(() => {
         getLineColor: [139,0,0],//(d: any) => getGradientColor(d.properties.percentile),
         // (d: any) => d.properties?.percentile ? getGradientColor(d.properties.percentile) : [0, 0, 0],
         getFillColor: (d: any) => getGradientColor(d.properties.percentile),
-        pickable: (d: any) => {return d.properties.percentile == -1 ? false : true},
+        pickable: true,
         autoHighlight: true,
         onClick: info => {
           emit('update:modelValue', info.object.properties.name)
