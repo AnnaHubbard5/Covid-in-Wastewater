@@ -30,7 +30,7 @@ const props = defineProps<{ val: number; min: number; max: number }>()
 }
 
 .center {
-  background: $bg;
+  background: $darker;
   top: 50%;
   width: 4rem;
   height: 4rem;
