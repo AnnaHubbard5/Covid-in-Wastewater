@@ -3,6 +3,11 @@ from sodapy import Socrata
 from datetime import datetime, timedelta
 import json
 
+def get_dict_from_json(file_name):
+    with open(file_name) as json_file:
+        data = json.load(json_file)
+        return data
+    
 
 
 def wwByCounty(county_name, date= None, limit= None):
@@ -11,18 +16,24 @@ def wwByCounty(county_name, date= None, limit= None):
     i = 0
     while not results and i < 30:  
         results = client.get("2ew6-ywp6", county_names = county_name, date_end = date,limit = limit)
-        date = getDayEarlier(date)
-        i += 1
+        if date != None:
+            date = getDayEarlier(date)
+            i += 1
+        else:
+            break
     return results
 
 def ret_object_for_Chris(county_name):
     results = wwByCounty(county_name)
     waterQualities = {}
-    for result in results:
-        try:
-            waterQualities[county_name][result['wwtp_id'][result['date_start']]] = result['percentile']
-        except:
-            waterQualities[county_name][result['wwtp_id'][result['date_start']]] = -1
+    if results:
+        for result in results:
+            try:
+                waterQualities = {county_name: {result['wwtp_id']: {result['date_start']: result['percentile']}}}
+                # waterQualities[county_name][result['wwtp_id'][result['date_start']]] = result['percentile']
+            except:
+                waterQualities = {county_name: {result['wwtp_id']: {result['date_start']: -1}}}
+    
     return waterQualities
 
 def getAveragePercentage(county_name, date, limit= None):

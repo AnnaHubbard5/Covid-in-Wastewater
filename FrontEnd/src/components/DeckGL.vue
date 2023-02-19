@@ -79,7 +79,7 @@ onMounted(() => {
         pickable: true,
         autoHighlight: true,
         onClick: info => {
-          emit('update:modelValue', info.object.properties.name + ": " + info.object.properties.percentile)
+          emit('update:modelValue', info.object.properties.name)
         },
       }),
     ],
@@ -88,5 +88,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <canvas id="deck-canvas" />
+  <canvas id="deck-canvas"/>
 </template>
