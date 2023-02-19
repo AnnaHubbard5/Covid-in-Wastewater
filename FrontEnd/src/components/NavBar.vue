@@ -22,7 +22,7 @@ nav {
   padding: 1.5rem;
   font-size: 20px;
   font-weight: bold;
-  background-color: $headerbg;
+  background-color: $black;
   text-align: center;
 }
 
@@ -32,13 +32,13 @@ nav {
 
 a {
   text-decoration: none;
-  color: $fg;
+  color: $light;
   border-bottom: 1pt solid transparent;
   opacity: 0.8;
 
   &:hover,
   &.router-link-active {
-    border-bottom-color: $fg;
+    border-bottom-color: $light;
     opacity: 1;
   }
 }

@@ -1,25 +1,41 @@
 @use 'sass:color';
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Staatliches&display=swap');
 
-$bg: #d1dbed;
-$fg: #ECEFF4;
-$lightBg: color.mix($fg, $bg, 20%);
-$darkBg: color.mix(black, $bg, 50%);
-$headerbg: #2E3440;
+$black: #2e3440;
+$darkest: #3b4252;
+$darker: #434c5e;
+$dark: #4c566a;
+$light: #d8dee9;
+$lighter: #e5e9f0;
+$lightest: #eceff4;
+$medium: color.mix($dark, $light, 70%);
+
+$red: #bf616a;
+$orange: #d08770;
+$yellow: #ebcb8b;
+$green: #a3be8c;
+$blue: #81a1c1;
+$purple: #b48ead;
+
 $textWidth: 480pt;
 
-h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Staatliches', sans-serif;
+  color: $darkest;
 }
 :root {
   font-family: 'Source Sans Pro', sans-serif;
-  color: $fg;
+  color: $medium;
 }
 
 body {
   margin: 0;
-  background: $bg;
-  color: Black;
+  background: $lightest;
 }
 
 .about {
@@ -33,39 +49,49 @@ body {
 }
 
 select,
-input[type='submit'],
 input[type='text'],
 input[type='email'] {
   background: transparent;
   padding: 0.5rem;
   border-radius: 0.25rem;
   color: black;
-  border: 2px solid $darkBg;
+  border: 2px solid $light;
   transition: 200ms;
 
   &:focus {
     outline: none;
-    border-color: black;
+    border-color: $medium;
   }
+}
+
+input[type='submit'] {
+  background: $blue;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 2px solid transparent;
+  transition: 200ms;
+  cursor: pointer;
 
   &:disabled {
     cursor: default;
-    opacity: 0.4;
+    background: transparent;
+    border: 2px solid $light;
+    color: $light;
   }
 }
 
 ::placeholder {
-  opacity: 0.4;
-  color: black;
+  color: $medium;
 }
 
 $rangeHeight: 0.75rem;
 input[type='range'] {
   color: red;
   appearance: none;
-  background: rgba($color: #000000, $alpha: 0.3);
+  background: $lightest;
   height: $rangeHeight;
-  border: 1px solid $lightBg;
+  border: 2px solid $light;
   border-radius: 1000px;
   overflow: hidden;
   position: relative;
@@ -75,11 +101,11 @@ input[type='range'] {
   width: $rangeHeight;
   height: $rangeHeight;
   border-radius: 50%;
-  background: $bg;
+  background: $darker;
   cursor: pointer;
-  border: 1px solid $fg;
+  border: 1px solid $medium;
 
-  box-shadow: -407px 0 0 400px $darkBg;
+  box-shadow: -407px 0 0 400px $darkest;
 }
 
 @mixin hiddenScroll() {
