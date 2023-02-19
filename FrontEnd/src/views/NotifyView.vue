@@ -134,6 +134,8 @@ const counties = [
         :disabled="!formIsValid"
         @click="submit" 
       />
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
