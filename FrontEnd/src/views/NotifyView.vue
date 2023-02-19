@@ -16,14 +16,21 @@ const formIsValid = computed(() => {
 })
 
 const submit = () => {
+  var arg = email.value + "," + county.value + "," + threshold.value;
+
+  var url = "http://127.0.0.1:5000/";
+
   fetch(
-    '/' +
+    url + "?"+
       qs.stringify({
         email: email.value,
         county: county.value,
         threshold: threshold.value,
       })
   )
+  // .then(response => response.text())
+  // .then(data => console.log(data))
+  // .catch(error => console.error(error));
 }
 
 const counties = [
