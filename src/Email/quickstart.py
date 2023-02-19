@@ -44,23 +44,23 @@ def main():
         message = EmailMessage()
 
         
-        content = 'Message body in <b>html</b> format!'
+        #content = 'Message body in <b>html</b> format!'
 
-        # f = open('./src/Email/emailContent.txt', "r")
-        # content = f.read()
-        # f.close()
+        f = open('./src/Email/emailContent.txt', "r")
+        content = f.read()
+        f.close()
+        
 
         print("File read")
 
-        message['To'] = 'dhruv.nanavati10@gmail.com'
+        message['To'] = 'dnanavati@scu.edu'
         message['From'] = 'covidalerts2023@gmail.com'
         message['Subject'] = 'Your COVID-19 Breakdown'
         message.add_header('Content-Type','text/html')
         message.set_payload(content)
 
         # encoded message
-        encoded_message = base64.urlsafe_b64encode(message.as_bytes()) \
-            .decode()
+        encoded_message = base64.urlsafe_b64encode(message.as_string().encode('utf-8')).decode()
 
         create_message = {
             'raw': encoded_message
