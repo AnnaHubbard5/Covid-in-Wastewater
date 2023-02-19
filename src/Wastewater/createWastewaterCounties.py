@@ -18,9 +18,11 @@ def getAveragePercentage(county_name, date, limit= None):
     percentile = 0
     for result in results:
         percentile += result['percentile']
+        percentile += float(result['percentile'])
 
-    percentile = percentile / results
-        print("hi")
+    percentile = percentile / len(results)
+    print(str(percentile))
+
 
 def getDayEarlier(date):
     date_obj = datetime.strptime(date, "%Y-%m-%d")
