@@ -24,7 +24,7 @@ const INITIAL_VIEW_STATE = {
 
 function getGradientColor(value: number): Uint8Array{
   if (value == -1)
-    return Uint8Array.from([210,105,30, 255])
+    return Uint8Array.from([0,0,30, 255])
   var distance = value / 100
   // Calculate the color based on the distance
   if (distance < 0.3) {

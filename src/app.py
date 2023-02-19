@@ -44,10 +44,15 @@ def home():
         db[request.args.get("email")] = {}
         db[request.args.get("email")]['county'] = request.args.get("county")
         db[request.args.get("email")]['threshold'] = request.args.get("threshold")
-        qs.send_email(request.args.get("email"), request.args.get("county"), request.args.get("threshold"), True)
+        cwc.write_dict_to_json(db, "./src/email_database.json")
+        percentile = cwc.getAveragePercentage(request.args.get("county"), None)
+        if percentile == -1:
+            percentile = "Data not reported. N/A"
+        qs.send_email(request.args.get("email"), request.args.get("county"), request.args.get("threshold"), percentile, True)
 
     else:
-        return "Your email is already in there"
+        print("Your email is already in use")
+        return jsonify({'error': "Your email is already in use"})
 
     # Use the argument in the home function
     message = "Success!"
