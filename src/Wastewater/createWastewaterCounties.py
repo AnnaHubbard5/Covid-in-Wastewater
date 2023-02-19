@@ -2,6 +2,7 @@ import pandas as pd
 from sodapy import Socrata
 from datetime import datetime, timedelta
 import json
+from src.Wastewater import clean_cases_csv as ccc
 
 def get_dict_from_json(file_name):
     with open(file_name) as json_file:
@@ -30,7 +31,7 @@ def ret_object_for_Chris(county_name):
     if results:
         for result in results:
             wwtp_id = result['wwtp_id']
-            date_start = result['date_start']
+            date_start = ccc.add_epoch(result['date_start'])
             try:
                 percentile = float(result.get('percentile'))
                 if percentile > 100:

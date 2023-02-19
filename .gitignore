@@ -16,6 +16,4 @@ node_modules
 venv/
 
 
-*.csv
-
 __pycache__
