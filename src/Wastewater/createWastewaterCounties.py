@@ -5,7 +5,7 @@ import json
 
 
 
-def wwByCounty(county_name, date, limit= None):
+def wwByCounty(county_name, date= None, limit= None):
     client = Socrata("data.cdc.gov", None)
     results = None
     i = 0
@@ -15,15 +15,32 @@ def wwByCounty(county_name, date, limit= None):
         i += 1
     return results
 
+def ret_object_for_Chris(county_name):
+    results = wwByCounty(county_name)
+    waterQualities = {}
+    for result in results:
+        try:
+            waterQualities[county_name][result['wwtp_id'][result['date_start']]] = result['percentile']
+        except:
+            waterQualities[county_name][result['wwtp_id'][result['date_start']]] = -1
+    return waterQualities
+
 def getAveragePercentage(county_name, date, limit= None):
     results = wwByCounty(county_name, date, limit)
     if not results:
         return -1
     percentile = 0
+    i = 0
     for result in results:
-        percentile += float(result['percentile'])
+        if float(result['percentile']) > 100:
+            continue
+        try:
+            percentile += float(result['percentile'])
+            i += 1
+        except:
+            print(county_name + "," + str(i))
 
-    percentile = percentile / len(results)
+    percentile = percentile / i
     return percentile
 
 
@@ -55,8 +72,8 @@ def populateJson(date):
 
 
 
-
 if __name__ == "__main__":
-    #getAveragePercentage("Alameda", "2023-02-18")
-    populateJson("2023-02-18")
+    print(getAveragePercentage("Riverside", "2023-02-18"))
+
+    #populateJson("2023-02-18")
     #wwByCounty("Alameda", "2023-02-18")
