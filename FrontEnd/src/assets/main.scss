@@ -2,6 +2,8 @@
 
 $bg: hsl(35 28% 17% / 100%);
 $fg: hsl(20 22% 77%);
+$bg: hsl(215, 100%, 92%);
+$fg: hsl(0, 0%, 100%);
 $lightBg: color.mix($fg, $bg, 20%);
 $textWidth: 480pt;
 
@@ -13,6 +15,15 @@ $textWidth: 480pt;
 body {
   margin: 0;
   background: $bg;
+  color: hsl(0, 0%, 0%);
+}
+
+.about {
+  padding: 10px;
+
+  a {
+    color: hsl(0, 0%, 0%);
+  }
 }
 
 select,

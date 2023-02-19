@@ -3,10 +3,11 @@
 <template>
   <nav>
     <div class="spacer"></div>
-    <router-link to="/">Covid in Wastewater</router-link>
+    <router-link to="/">COVID in Wastewater</router-link>
     <router-link to="/about">About</router-link>
     <router-link to="/notify">Get Notified</router-link>
     <div class="spacer"></div>
+    <router-link to="/about">Get Notified</router-link>
   </nav>
 </template>
 
@@ -14,9 +15,14 @@
 nav {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 4rem;
+  padding: 1.5rem;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: hsla(0, 4%, 19%, 0.876);
+  text-align: center;
 }
+
 .spacer {
   flex: 1;
 }
