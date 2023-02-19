@@ -1,10 +1,11 @@
 @use 'sass:color';
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Staatliches&display=swap');
 
-$bg: hsl(215, 100%, 92%);
-$fg: hsl(0, 0%, 100%);
+$bg: #d1dbed;
+$fg: #ECEFF4;
 $lightBg: color.mix($fg, $bg, 20%);
 $darkBg: color.mix(black, $bg, 50%);
+$headerbg: #2E3440;
 $textWidth: 480pt;
 
 h1,h2,h3,h4,h5,h6 {

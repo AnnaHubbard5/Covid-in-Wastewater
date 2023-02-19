@@ -17,11 +17,11 @@ const props = defineProps<{ val: number; min: number; max: number }>()
   position: relative;
   background: conic-gradient(
     from 225deg,
-    green 90deg,
-    yellow 91deg,
-    yellow 180deg,
-    red 181deg,
-    red 270deg,
+    #A3BE8C 90deg,
+    #EBCB8B 91deg,
+    #EBCB8B 180deg,
+    #BF616A 181deg,
+    #BF616A 270deg,
     transparent 271deg
   );
   height: 8rem;
