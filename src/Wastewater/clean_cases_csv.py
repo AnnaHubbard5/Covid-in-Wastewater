@@ -20,14 +20,14 @@ def add_epoch(date):
     return epoch_value
 
 if __name__ == "__main__":
-    # print(add_epoch("2022-01-01"))
-    l = csv_to_list("./FrontEnd/public/new_cases.csv")
-    newlist = []
-    newlist.append(l[0])
-    for i in range(1,len(l)):
-        if l[i][2] == "California":
-            l[i].append(add_epoch(l[i][11]))
-            newlist.append(l[i])
+    print(add_epoch("2022-04-23"))
+    # l = csv_to_list("./FrontEnd/public/new_cases.csv")
+    # newlist = []
+    # newlist.append(l[0])
+    # for i in range(1,len(l)):
+    #     if l[i][2] == "California":
+    #         l[i].append(add_epoch(l[i][11]))
+    #         newlist.append(l[i])
     
-    list_to_csv(newlist, "./FrontEnd/public/new_cases.csv")
+    # list_to_csv(newlist, "./FrontEnd/public/new_cases.csv")
     
