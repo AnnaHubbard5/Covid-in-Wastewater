@@ -33,6 +33,18 @@ function initChart() {
       backgroundColor: 'rgba(0,0,0,0)',
       showLine: true,
       borderColor: colors.medium + (50).toString(16),
+      scales: {
+        y: {
+          min: 0,
+          max: 100,
+        },
+        x: {
+          ticks: {
+            source: 'data',
+            // callback: val => formatDate(new Date(val), 'MMM d, y'),
+          },
+        },
+      },
     },
     data: {
       labels: [] as string[],

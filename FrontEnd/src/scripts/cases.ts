@@ -4,7 +4,7 @@ import { format as formatDate } from 'date-fns'
 const fmtDate = (date: string | Date) => new Date(date).getTime()
 
 export default async function getCases() {
-  const res = await fetch('/cases.csv')
+  const res = await fetch('/new_cases.csv')
   let csv = (await res.text()).split('\n')
 
   // Convert csv to json
