@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { filename } from '@loaders.gl/loader-utils/dist/lib/path-utils/path';
 import qs from 'qs'
 import { computed, ref } from 'vue'
+import Meter from '../components/Meter.vue';
 
 const email = ref('')
 const county = ref('Select County')
 const threshold = ref(60)
+const meterShown = ref(0);
 
 const formIsValid = computed(() => {
   return (
@@ -15,12 +18,12 @@ const formIsValid = computed(() => {
   )
 })
 
-const submit = () => {
+const submit = async () => {
   var arg = email.value + "," + county.value + "," + threshold.value;
 
   var url = "http://127.0.0.1:5000/";
 
-  fetch(
+  await fetch(
     url + "?"+
       qs.stringify({
         email: email.value,
@@ -28,6 +31,13 @@ const submit = () => {
         threshold: threshold.value,
       })
   )
+
+      const res1 = await fetch('http://127.0.0.1:5000/jsonfile?' + qs.stringify({ county: county.value }))
+      const json = (await res1.json())[county.value]
+      const firstPlantData = Object.values(json)[0] as number[]
+      const mostRecentData = Object.values(firstPlantData)[Object.values(firstPlantData).length - 1]
+      meterShown.value = mostRecentData
+
   // .then(response => response.text())
   // .then(data => console.log(data))
   // .catch(error => console.error(error));
@@ -122,9 +132,10 @@ const counties = [
         type="submit"
         value="Submit"
         :disabled="!formIsValid"
-        @click="submit"
+        @click="submit" 
       />
     </div>
+    <Meter v-if="meterShown" :val="meterShown" :min="0" :max="100" />
   </div>
 </template>
 
