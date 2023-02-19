@@ -3,20 +3,20 @@ from __future__ import print_function
 import os.path
 import base64
 
+from datetime import datetime
 from email.message import EmailMessage
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from bs4 import BeautifulSoup
-import codecs
+
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/gmail.compose']
 
 
-def main():
+def send_email(county, percentile, new_person = False):
     """Shows basic usage of the Gmail API.
     Lists the user's Gmail labels.
     """
@@ -43,19 +43,25 @@ def main():
         
         message = EmailMessage()
 
-        
-        #content = 'Message body in <b>html</b> format!'
-
-        f = open('./src/Email/emailContent.txt', "r")
+        if new_person:
+            f = open('./src/Email/welcomeEmail.txt', "r")
+        else:
+            f = open('./src/Email/emailContent.txt', "r")
         content = f.read()
         f.close()
-        
+        # print("File read")
 
-        print("File read")
+        today = datetime.now()
+        content = content.replace("[$$Date$$]", str(today.day) + " " + str(today.strftime("%B")) + " " + str(today.year) + ",")
+        content = content.replace("[$$County$$]", county + " County")
+        content = content.replace("[$$Percentile$$]", str(percentile) + "%")
 
         message['To'] = 'dnanavati@scu.edu'
         message['From'] = 'covidalerts2023@gmail.com'
-        message['Subject'] = 'Your COVID-19 Breakdown'
+        if new_person:
+            message['Subject'] = 'Welcome to Water Watcher Alerts'
+        else:
+            message['Subject'] = 'Your COVID-19 Breakdown'
         message.add_header('Content-Type','text/html')
         message.set_payload(content)
 
@@ -65,14 +71,16 @@ def main():
         create_message = {
             'raw': encoded_message
         }
-        # pylint: disable=E1101
+        
         send_message = (service.users().messages().send
                         (userId="me", body=create_message).execute())
-        print(F'Message Id: {send_message["id"]}')
+        # print(F'Message Id: {send_message["id"]}')
     except HttpError as error:
         # TODO(developer) - Handle errors from gmail API.
         print(f'An error occurred: {error}')
 
 
 if __name__ == '__main__':
-    main()
+    c = "Fresno"
+    p = "76.51"
+    send_email(c, p, True)

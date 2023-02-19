@@ -156,7 +156,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
     <tr>
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:25px 10px 50px;font-family:'Open Sans',sans-serif;" align="left">
         
-  <h1 class="v-font-size" style="margin: 0px; color: #000000; line-height: 140%; text-align: center; word-wrap: break-word; font-size: 22px; "><strong>COVID WASTEWATER DETECTION ALERT</strong></h1>
+  <h1 class="v-font-size" style="margin: 0px; color: #000000; line-height: 140%; text-align: center; word-wrap: break-word; font-size: 22px; "><strong>Welcome to Water Watcher Alerts!</strong></h1>
 
       </td>
     </tr>
@@ -190,11 +190,11 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
       <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:50px;font-family:'Open Sans',sans-serif;" align="left">
         
   <div class="v-font-size" style="line-height: 140%; text-align: left; word-wrap: break-word;">
-    <p style="line-height: 140%; font-size: 14px;"><span style="font-family: 'Open Sans', sans-serif; font-size: 16px; line-height: 22.4px;"><strong>[Current Date]</strong></span></p>
+    <p style="line-height: 140%; font-size: 14px;"><span style="font-family: 'Open Sans', sans-serif; font-size: 16px; line-height: 22.4px;"><strong>[$$Date$$]</strong></span></p>
 <p style="line-height: 140%; font-size: 14px;"> </p>
-<p style="line-height: 140%; font-size: 14px;"><span style="font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 19.6px;">Welcome to Water Watchers COVID-19! Thank you for subscribing to our email list.</span></p>
+<p style="line-height: 140%; font-size: 14px;"><span style="font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 19.6px;">Welcome to Water Watchers COVID-19! Thank you for subscribing to our email list. You will be alerted if COVID-19 levels rise higher than the threshold you provided in your county.</span></p>
 <p style="line-height: 140%; font-size: 14px;"> </p>
-<p style="line-height: 140%; font-size: 14px;"><span style="font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 19.6px;">Current Levels in [County]: [Percentile]</span></p>
+<p style="line-height: 140%; font-size: 14px;"><span style="font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 19.6px;">Current Levels in [$$County$$]: [$$Percentile$$]</span></p>
 <p style="line-height: 140%; font-size: 14px;"> </p>
 <p style="line-height: 140%; font-size: 14px;"><span style="font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 19.6px;">Wastewater COVID detection can detect COVID up to 3 days before symptoms arise. This makes it very important to make sure to follow the <a rel="noopener" href="https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html" target="_blank">CDC guidelines</a> on protecting yourself and others in your area.</span></p>
 <p style="line-height: 140%; font-size: 14px;"> </p>
