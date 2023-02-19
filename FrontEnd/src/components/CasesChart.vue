@@ -2,7 +2,8 @@
 import qs from 'qs'
 import Chart from 'chart.js/auto'
 import { format as formatDate } from 'date-fns'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+import colors from '@/scripts/colors'
 
 const props = defineProps<{ county: string }>()
 
@@ -18,22 +19,31 @@ type CovidCases = {
   [date: string]: number
 }
 
-const res1 = await fetch('http://127.0.0.1:5000/jsonfile?' + qs.stringify({ county: props.county }))
-const waterTests: WaterTests = await res1.json()
+let chart: Chart
+function initChart() {
+  if (!canvas.value) throw new Error('Canvas is not defined')
+  chart = new Chart(canvas.value, {
+    type: 'line',
+    data: {
+      labels: [] as string[],
+      datasets: [],
+    },
+  })
+}
 
-// const res2 = await fetch('http://localhost:5000/jsonfile?' + qs.stringify({ county: props.county }))
-// const covidCases: CovidCases = await res2.json()
+async function setData() {
+  const res1 = await fetch(
+    'http://127.0.0.1:5000/jsonfile?' + qs.stringify({ county: props.county })
+  )
+  const waterTests: WaterTests = (await res1.json())[props.county]
 
-function getAllDates() {
-  const dates: string[] = []
-
+  let dates: string[] = []
   // for (let i = 0; i < Object.keys(covidCases).length; i++) {
   //   const date = Object.keys(covidCases)[i]
   //   if (!(date in dates)) {
   //     dates.push(date)
   //   }
   // }
-
   for (let i = 0; i < Object.values(waterTests).length; i++) {
     const plant = Object.values(waterTests)[i]
     for (let j = 0; j < Object.keys(plant).length; j++) {
@@ -44,27 +54,27 @@ function getAllDates() {
     }
   }
 
-  return dates.map(a => formatDate(new Date(a), 'MMM d, y'))
+  dates = dates.map(a => formatDate(new Date(a), 'MMM d, y'))
+  chart.data.labels = dates
+
+  chart.data.datasets = [
+    // Covid cases
+
+    // Test results for each water treatment plant
+    ...Object.entries(waterTests).map(([plantName, plant]) => ({
+      label: 'Waste Water Quality at plant ' + plantName,
+      data: Object.values(plant),
+    })),
+  ]
+
+  chart.update()
 }
 
 onMounted(() => {
-  if (!canvas.value) throw new Error('Canvas is not defined')
+  initChart()
+  setData()
 
-  new Chart(canvas.value, {
-    type: 'line',
-    data: {
-      labels: getAllDates(),
-      datasets: [
-        // Covid cases
-
-        // Test results for each water treatment plant
-        ...Object.entries(waterTests).map(([plantName, plant]) => ({
-          label: 'Waste Water Quality at plant ' + plantName,
-          data: Object.values(plant),
-        })),
-      ],
-    },
-  })
+  watch(props, setData)
 })
 </script>
 
