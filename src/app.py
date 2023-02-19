@@ -50,8 +50,8 @@ def home():
         percentile = cwc.getAveragePercentage(county_name, None)
         if percentile == -1:
             qs.send_email(request.args.get("email"), county_name, request.args.get("threshold"), "Data not reported. N/A", True)
-        
-        qs.send_email(request.args.get("email"), county_name, request.args.get("threshold"), float("{:.2f}".format(percentile)), True)
+        else:
+            qs.send_email(request.args.get("email"), county_name, request.args.get("threshold"), float("{:.2f}".format(percentile)), True)
 
     else:
         print("Your email is already in use")
