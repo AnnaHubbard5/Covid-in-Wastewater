@@ -26,15 +26,41 @@ def wwByCounty(county_name, date= None, limit= None):
 def ret_object_for_Chris(county_name):
     results = wwByCounty(county_name)
     waterQualities = {}
+    
     if results:
         for result in results:
-            try:
-                waterQualities = {county_name: {result['wwtp_id']: {result['date_start']: result['percentile']}}}
-                # waterQualities[county_name][result['wwtp_id'][result['date_start']]] = result['percentile']
-            except:
-                waterQualities = {county_name: {result['wwtp_id']: {result['date_start']: -1}}}
+            wwtp_id = result['wwtp_id']
+            date_start = result['date_start']
+            percentile = float(result['percentile'])
+
+            if county_name not in waterQualities:
+                waterQualities[county_name] = {}
+
+            if wwtp_id not in waterQualities[county_name]:
+                waterQualities[county_name][wwtp_id] = {}
+
+            waterQualities[county_name][wwtp_id][date_start] = percentile
     
     return waterQualities
+
+
+# def ret_object_for_Chris(county_name):
+#     results = wwByCounty(county_name)
+#     waterQualities = waterQualities = {county_name: {}}
+    
+#     if results:
+#         for result in results:
+
+#             try:
+#                 waterQualities[county_name][result['wwtp_id'][result['date_start']]].append(float(result['percentile']))
+                
+#             except:
+#                 waterQualities[county_name][result['wwtp_id'][result['date_start']]] = []
+#                 waterQualities[county_name][result['wwtp_id'][result['date_start']]].append(float(result['percentile']))
+#                 #waterQualities = {county_name: {result['wwtp_id']: {result['date_start']: -1}}}
+    
+#     waterQualities[county_name][result['wwtp_id'][result['date_start']]]
+#     return waterQualities
 
 def getAveragePercentage(county_name, date, limit= None):
     results = wwByCounty(county_name, date, limit)
