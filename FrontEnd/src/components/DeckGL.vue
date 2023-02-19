@@ -16,7 +16,7 @@ const COUNTRIES =
 const INITIAL_VIEW_STATE = {
   latitude: 36,
   longitude: -120.5,
-  zoom: 5.25,
+  zoom: 5.15,
   bearing: 0,
   pitch: 30,
 }
