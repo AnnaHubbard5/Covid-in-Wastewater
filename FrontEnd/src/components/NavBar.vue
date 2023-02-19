@@ -3,14 +3,18 @@
 <template>
   <nav>
     <div class="spacer"></div>
-    <router-link to="/">COVID in Wastewater</router-link>
-    <router-link to="/about">About</router-link>
-    <router-link to="/notify">Get Notified</router-link>
+    <h4><router-link to="/">COVID in Wastewater</router-link></h4>
+    <h4><router-link to="/about">About</router-link></h4>
+    <h4><router-link to="/notify">Get Notified</router-link></h4>
     <div class="spacer"></div>
   </nav>
 </template>
 
 <style scoped lang="scss">
+h4 {
+  margin: 0;
+}
+
 nav {
   display: flex;
   flex-direction: row;
