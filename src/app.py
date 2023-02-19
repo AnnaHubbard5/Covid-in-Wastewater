@@ -55,9 +55,9 @@ def home():
         return jsonify({'error': "Your email is already in use"})
 
     # Use the argument in the home function
-    message = "Success!"
+    
     print(request.args.get("email"), request.args.get("county"), request.args.get("threshold"))
-    return message
+    return jsonify({})
 
 
 
