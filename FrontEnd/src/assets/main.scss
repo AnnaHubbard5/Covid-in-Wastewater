@@ -19,6 +19,8 @@ body {
 
 .about {
   padding: 10px;
+  max-width: $textWidth;
+  margin: 0 auto;
 
   a {
     color: hsl(0, 0%, 0%);
