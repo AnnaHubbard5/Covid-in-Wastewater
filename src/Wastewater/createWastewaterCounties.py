@@ -31,7 +31,10 @@ def ret_object_for_Chris(county_name):
         for result in results:
             wwtp_id = result['wwtp_id']
             date_start = result['date_start']
-            percentile = float(result['percentile'])
+            try:
+                percentile = float(result.get('percentile'))
+            except:
+                continue
 
             if county_name not in waterQualities:
                 waterQualities[county_name] = {}

@@ -85,6 +85,8 @@ onMounted(() => {
         pickable: true,
         autoHighlight: true,
         onClick: info => {
+          if (info.object.properties.percentile == -1) 
+            return;
           emit('update:modelValue', info.object.properties.name)
         },
       }),
