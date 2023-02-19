@@ -37,7 +37,7 @@ onMounted(() => {
         lineWidthMinPixels: 2,
         opacity: 0.4,
         getLineColor: [60, 60, 60],
-        getFillColor: [200, 200, 200],
+        getFillColor: [190, 190, 190],
       }),
       new GeoJsonLayer({
         id: 'overlay',
@@ -47,8 +47,8 @@ onMounted(() => {
         filled: true,
         lineWidthMinPixels: 2,
         opacity: 0.1,
-        getLineColor: [139, 0, 0],
-        getFillColor: [139, 0, 0],
+        getLineColor: [0, 0, 0],
+        getFillColor: [15, 15, 15],
         pickable: true,
         autoHighlight: true,
         onClick: info => {
