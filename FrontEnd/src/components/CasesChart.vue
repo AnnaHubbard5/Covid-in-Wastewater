@@ -9,7 +9,7 @@ import colors from '@/scripts/colors'
 const props = defineProps<{ county: string }>()
 
 // const fmtDate = (date: string | Date) => formatDate(new Date(date), 'MMM d, y')
-const fmtDate = (date: string | Date) => new Date(date).getTime()
+const toEpoch = (date: string | Date) => new Date(date).getTime()
 
 const canvas = ref<null | HTMLCanvasElement>(null)
 
@@ -17,10 +17,6 @@ type WaterTests = {
   [plantId: string]: {
     [date: string]: number
   }
-}
-
-type CovidCases = {
-  [date: string]: number
 }
 
 let chart: Chart
@@ -60,10 +56,9 @@ async function setData() {
   const waterTests: WaterTests = (await res1.json())[props.county]
 
   const allCases = await getCases()
-  console.log({ allCases })
   const cases = allCases[props.county + ' County']
 
-  let dates = Object.keys(Object.values(waterTests)[0]).map(a => fmtDate(a))
+  let dates = Object.keys(Object.values(waterTests)[0]).map(a => toEpoch(a))
 
   chart.data.labels = dates.map(a => formatDate(a, 'MMM d, y'))
 
@@ -72,20 +67,21 @@ async function setData() {
       label: 'Cases per 1m in ' + props.county,
       borderColor: colors.red,
       backgroundColor: colors.red,
-      // @ts-ignore
-      data: Object.entries(cases)
-        .sort((a, b) => b[0] - a[0])
-        .map(([date, val]) => ({
-          x: date,
-          y: val * 10,
-        })),
+      data: cases
+        .sort((a, b) => a.date - b.date)
+        .map(({ date, cases }) => {
+          console.log({ date, cases }, new Date(date))
+          return {
+            x: date,
+            y: cases * 10,
+          }
+        }),
     },
 
-    // @ts-ignore
     ...Object.entries(waterTests).map(([plantName, plant]) => ({
       label: 'Waste Water Quality at plant ' + plantName,
       data: Object.entries(plant).map(([date, val]) => ({
-        x: fmtDate(date),
+        x: toEpoch(date),
         y: val,
       })),
     })),
