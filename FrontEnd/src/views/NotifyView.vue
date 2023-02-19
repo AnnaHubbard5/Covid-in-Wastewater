@@ -7,7 +7,7 @@ import Meter from '../components/Meter.vue';
 const email = ref('')
 const county = ref('Select County')
 const threshold = ref(60)
-const meterShown = ref(0);
+//const meterShown = ref(0);
 
 const formIsValid = computed(() => {
   return (
@@ -32,11 +32,11 @@ const submit = async () => {
       })
   )
 
-      const res1 = await fetch('http://127.0.0.1:5000/jsonfile?' + qs.stringify({ county: county.value }))
-      const json = (await res1.json())[county.value]
-      const firstPlantData = Object.values(json)[0] as number[]
-      const mostRecentData = Object.values(firstPlantData)[Object.values(firstPlantData).length - 1]
-      meterShown.value = mostRecentData
+      //const res1 = await fetch('http://127.0.0.1:5000/jsonfile?' + qs.stringify({ county: county.value }))
+      //const json = (await res1.json())[county.value]
+      //const firstPlantData = Object.values(json)[0] as number[]
+      //const mostRecentData = Object.values(firstPlantData)[Object.values(firstPlantData).length - 1]
+      //meterShown.value = mostRecentData
 
   // .then(response => response.text())
   // .then(data => console.log(data))
@@ -134,9 +134,6 @@ const counties = [
         :disabled="!formIsValid"
         @click="submit" 
       />
-    </div>
-    <Meter v-if="meterShown" :val="meterShown" :min="0" :max="100" />
-  </div>
 </template>
 
 <style scoped lang="scss">
