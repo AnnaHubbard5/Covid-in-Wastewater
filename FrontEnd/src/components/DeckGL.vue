@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import colors, { rgb } from '@/scripts/colors';
 import { Deck } from '@deck.gl/core/typed'
 import { GeoJsonLayer, ArcLayer, PolygonLayer } from '@deck.gl/layers/typed'
 import { onMounted } from 'vue'
@@ -68,8 +69,8 @@ onMounted(() => {
         filled: true,
         lineWidthMinPixels: 2,
         opacity: 0.4,
-        getLineColor: [60, 60, 60],
-        getFillColor: [200, 200, 200],
+        getLineColor: rgb(colors.medium),
+        getFillColor: rgb(colors.light),
       }),
       new GeoJsonLayer({
         id: 'overlay',
@@ -79,7 +80,7 @@ onMounted(() => {
         filled: true,
         lineWidthMinPixels: 2,
         opacity: 0.3,
-        getLineColor: [0,0,0,255],//(d: any) => getGradientColor(d.properties.percentile),
+        getLineColor: rgb(colors.medium),//(d: any) => getGradientColor(d.properties.percentile),
         // (d: any) => d.properties?.percentile ? getGradientColor(d.properties.percentile) : [0, 0, 0],
         getFillColor: (d: any) => getGradientColor(d.properties.percentile),
         pickable: true,

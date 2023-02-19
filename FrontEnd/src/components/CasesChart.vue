@@ -29,10 +29,9 @@ function initChart() {
   chart = new Chart(canvas.value, {
     type: 'scatter',
     options: {
-      color: colors.medium + (50).toString(16),
+      color: colors.medium,
       backgroundColor: 'rgba(0,0,0,0)',
       showLine: true,
-      borderColor: colors.medium + (50).toString(16),
       scales: {
         y: {
           min: 0,
@@ -87,6 +86,8 @@ async function setData() {
     // @ts-ignore
     ...Object.entries(waterTests).map(([plantName, plant]) => ({
       label: 'Waste Water Quality at plant ' + plantName,
+      borderColor: colors.medium + (50).toString(16),
+      backgroundColor: colors.medium + (50).toString(16),
       data: Object.entries(plant).map(([date, val]) => {
         console.log(date)
         return {

@@ -6,12 +6,13 @@
       <h4>
         <router-link to="/" class="no-style">
           <img src="/toilet.svg" class="icon" />
+          Water Watcher COVID-19
         </router-link>
       </h4>
+      <div class="spacer"></div>
       <h4><router-link to="/">Track</router-link></h4>
       <h4><router-link to="/about">About</router-link></h4>
       <h4><router-link to="/notify">Get Notified</router-link></h4>
-      <div class="spacer"></div>
     </div>
   </nav>
 </template>
@@ -46,15 +47,22 @@ nav {
   flex: 1;
 }
 
-a:not(.no-style) {
+a {
   text-decoration: none;
   color: $light;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+a:not(.no-style) {
   border-bottom: 1pt solid transparent;
-  opacity: 0.8;
 
   &:hover,
   &.router-link-active {
     border-bottom-color: $light;
+    color: $lightest;
     opacity: 1;
   }
 }
