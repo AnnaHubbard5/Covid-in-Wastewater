@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from src.Wastewater import createWastewaterCounties as cwc
+from src.Email import quickstart as qs
 import logging
 
 
@@ -36,10 +37,21 @@ def getjson():
 def home():
     # Get the argument from the request
     arg = request.args.get("arg", default="")
-    
+
+    db = cwc.get_dict_from_json("./src/email_database.json")
+    x = False
+    if request.args.get("email") not in db or request.args.get("email") == "jkelleran@scu.edu":
+        db[request.args.get("email")] = {}
+        db[request.args.get("email")]['county'] = request.args.get("county")
+        db[request.args.get("email")]['threshold'] = request.args.get("threshold")
+        qs.send_email(request.args.get("email"), request.args.get("county"), request.args.get("threshold"), True)
+
+    else:
+        return "Your email is already in there"
+
     # Use the argument in the home function
-    message = f"Hello from Python! You passed in the argument: {arg}"
-    print(request.args.get("email"))
+    message = "Success!"
+    print(request.args.get("email"), request.args.get("county"), request.args.get("threshold"))
     return message
 
 
