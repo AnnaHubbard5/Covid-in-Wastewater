@@ -192,7 +192,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   <div class="v-font-size" style="line-height: 140%; text-align: left; word-wrap: break-word;">
     <p style="line-height: 140%; font-size: 14px;"><span style="font-family: 'Open Sans', sans-serif; font-size: 16px; line-height: 22.4px;"><strong>[$$Date$$]</strong></span></p>
 <p style="line-height: 140%; font-size: 14px;"> </p>
-<p style="line-height: 140%; font-size: 14px;"><span style="font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 19.6px;">Welcome to Water Watchers COVID-19! Thank you for subscribing to our email list. You will be alerted if COVID-19 levels rise higher than the threshold you provided in your county.</span></p>
+<p style="line-height: 140%; font-size: 14px;"><span style="font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 19.6px;">Welcome to Water Watchers COVID-19! Thank you for subscribing to our email list. You will be alerted if COVID-19 levels rise higher than [$$Threshhold$$].</span></p>
 <p style="line-height: 140%; font-size: 14px;"> </p>
 <p style="line-height: 140%; font-size: 14px;"><span style="font-family: 'Open Sans', sans-serif; font-size: 14px; line-height: 19.6px;">Current Levels in [$$County$$]: [$$Percentile$$]</span></p>
 <p style="line-height: 140%; font-size: 14px;"> </p>

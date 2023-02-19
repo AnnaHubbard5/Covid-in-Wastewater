@@ -16,7 +16,7 @@ from googleapiclient.errors import HttpError
 SCOPES = ['https://www.googleapis.com/auth/gmail.compose']
 
 
-def send_email(email, county, percentile, new_person = False):
+def send_email(email, county, threshhold, percentile, new_person = False):
     """Shows basic usage of the Gmail API.
     Lists the user's Gmail labels.
     """
@@ -54,6 +54,8 @@ def send_email(email, county, percentile, new_person = False):
         today = datetime.now()
         content = content.replace("[$$Date$$]", str(today.day) + " " + str(today.strftime("%B")) + " " + str(today.year) + ",")
         content = content.replace("[$$County$$]", county + " County")
+        if new_person:
+            content = content.replace("[$$Threshhold$$]", threshhold + "%")
         content = content.replace("[$$Percentile$$]", str(percentile) + "%")
 
         message['To'] = email #'dnanavati@scu.edu'
@@ -81,6 +83,8 @@ def send_email(email, county, percentile, new_person = False):
 
 
 if __name__ == '__main__':
+    e = "dnanavati@scu.edu"
     c = "Fresno"
+    t = "70"
     p = "76.51"
-    send_email(c, p, True)
+    send_email(e, c, t, p, True)
