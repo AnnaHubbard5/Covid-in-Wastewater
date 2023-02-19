@@ -37,18 +37,21 @@ def getjson():
 def home():
     # Get the argument from the request
     arg = request.args.get("arg", default="")
+    if request.args.get("email") == None or request.args.get("county") == None or request.args.get("threshold") == None:
+            return "python flask server"
 
     db = cwc.get_dict_from_json("./src/email_database.json")
-    x = False
+    county_name = request.args.get("county").rsplit(' ', 1)[0]
     if request.args.get("email") not in db or request.args.get("email") == "jkelleran@scu.edu":
         db[request.args.get("email")] = {}
-        db[request.args.get("email")]['county'] = request.args.get("county")
+        db[request.args.get("email")]['county'] = county_name
         db[request.args.get("email")]['threshold'] = request.args.get("threshold")
         cwc.write_dict_to_json(db, "./src/email_database.json")
-        percentile = cwc.getAveragePercentage(request.args.get("county"), None)
+        percentile = cwc.getAveragePercentage(county_name, None)
         if percentile == -1:
-            percentile = "Data not reported. N/A"
-        qs.send_email(request.args.get("email"), request.args.get("county"), request.args.get("threshold"), percentile, True)
+            qs.send_email(request.args.get("email"), county_name, request.args.get("threshold"), "Data not reported. N/A", True)
+        
+        qs.send_email(request.args.get("email"), county_name, request.args.get("threshold"), float("{:.2f}".format(percentile)), True)
 
     else:
         print("Your email is already in use")
