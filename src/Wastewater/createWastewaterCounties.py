@@ -74,15 +74,19 @@ def getAveragePercentage(county_name, date, limit= None):
     percentile = 0
     i = 0
     for result in results:
-        
         try:
-            if float(result['percentile']) > 100:
+            current = float(result.get('percentile'))
+            if current > 100:
                 continue
-            percentile += float(result['percentile'])
+            
+            percentile += current
             i += 1
-        except:
-            print(county_name + "," + str(i))
-
+        except Exception as e:
+            print(e)
+            continue
+    
+    if i == 0:
+        return -1
     percentile = percentile / i
     return percentile
 
