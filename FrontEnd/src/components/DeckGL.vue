@@ -79,7 +79,7 @@ onMounted(() => {
         filled: true,
         lineWidthMinPixels: 2,
         opacity: 0.3,
-        getLineColor: [139,0,0],//(d: any) => getGradientColor(d.properties.percentile),
+        getLineColor: [0,0,0,255],//(d: any) => getGradientColor(d.properties.percentile),
         // (d: any) => d.properties?.percentile ? getGradientColor(d.properties.percentile) : [0, 0, 0],
         getFillColor: (d: any) => getGradientColor(d.properties.percentile),
         pickable: true,
