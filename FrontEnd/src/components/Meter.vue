@@ -4,11 +4,11 @@ const props = defineProps<{ val: number; min: number; max: number }>()
 
 <template>
   <div class="bg">
-    <div class="dial" :style="{ '--amount': `${val / (max - min)}` }"></div>
     <div class="center"></div>
-    <span>{{ min }}</span>
-    <span>{{ max }}</span>
-    <span>{{ val }}</span>
+    <div class="dial" :style="{ '--angle': `${val / max * 360 + 225}deg` }"></div>
+    <span class="min">{{ min }}</span>
+    <span class="max">{{ max }}</span>
+    <span class="val">{{ val }}</span>
   </div>
 </template>
 
@@ -32,8 +32,8 @@ const props = defineProps<{ val: number; min: number; max: number }>()
 .center {
   background: $bg;
   top: 50%;
-  width: 2rem;
-  height: 2rem;
+  width: 4rem;
+  height: 4rem;
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
@@ -62,9 +62,9 @@ const props = defineProps<{ val: number; min: number; max: number }>()
 
 .dial {
   position: absolute;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform-origin: bottom center;
+  transform: rotate(var(--angle));
   background: red;
   width: 2px;
   height: 50%;
