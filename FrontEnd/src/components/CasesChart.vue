@@ -18,21 +18,21 @@ type CovidCases = {
   [date: string]: number
 }
 
-const res1 = await fetch('https://localhost:5000/jsonfile?' + qs.stringify({ county: props.county }))
+const res1 = await fetch('http://localhost:5000/jsonfile?' + qs.stringify({ county: props.county }))
 const waterTests: WaterTests = await res1.json()
 
-const res2 = await fetch('/?' + qs.stringify({ county: props.county }))
-const covidCases: CovidCases = await res2.json()
+// const res2 = await fetch('http://localhost:5000/jsonfile?' + qs.stringify({ county: props.county }))
+// const covidCases: CovidCases = await res2.json()
 
 function getAllDates() {
   const dates: string[] = []
 
-  for (let i = 0; i < Object.keys(covidCases).length; i++) {
-    const date = Object.keys(covidCases)[i]
-    if (!(date in dates)) {
-      dates.push(date)
-    }
-  }
+  // for (let i = 0; i < Object.keys(covidCases).length; i++) {
+  //   const date = Object.keys(covidCases)[i]
+  //   if (!(date in dates)) {
+  //     dates.push(date)
+  //   }
+  // }
 
   for (let i = 0; i < Object.values(waterTests).length; i++) {
     const plant = Object.values(waterTests)[i]
