@@ -1,8 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS
-import sys
-sys.path.append('/Users/joshkelleran/Covid-in-Wastewater/')
 from src.Wastewater import createWastewaterCounties as cwc
+
 
 app = Flask(__name__)
 CORS(app)

@@ -1,9 +1,4 @@
-<script setup lang="ts">
-import Meter from '../components/Meter.vue'
-</script>
-
 <template>
-  <Meter :min="0" :max="10" :val="3" />
 
 <body>
   <div class="about">
