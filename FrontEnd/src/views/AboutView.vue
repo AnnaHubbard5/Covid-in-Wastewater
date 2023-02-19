@@ -27,7 +27,7 @@
 
   <div class="about">
     <p>
-      <a href="https://covid.cdc.gov/covid-data-tracker/#wastewater-surveillance"> Learn more</a> about COVID-19 in wastewater
+      <a href="https://covid.cdc.gov/covid-data-tracker/#wastewater-surveillance" target="_blank"> Learn more</a> about COVID-19 in wastewater
     </p>
   </div>
     
