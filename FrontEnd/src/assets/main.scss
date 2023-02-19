@@ -1,10 +1,9 @@
 @use 'sass:color';
 
-$bg: hsl(35 28% 17% / 100%);
-$fg: hsl(20 22% 77%);
 $bg: hsl(215, 100%, 92%);
 $fg: hsl(0, 0%, 100%);
 $lightBg: color.mix($fg, $bg, 20%);
+$darkBg: color.mix(black, $bg, 50%);
 $textWidth: 480pt;
 
 :root {
@@ -15,7 +14,7 @@ $textWidth: 480pt;
 body {
   margin: 0;
   background: $bg;
-  color: hsl(0, 0%, 0%);
+  color: Black;
 }
 
 .about {
@@ -33,13 +32,13 @@ input[type='email'] {
   background: transparent;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  color: $fg;
-  border: 1px solid $lightBg;
+  color: black;
+  border: 2px solid $darkBg;
   transition: 200ms;
 
   &:focus {
     outline: none;
-    border-color: $fg;
+    border-color: black;
   }
 
   &:disabled {
@@ -50,7 +49,7 @@ input[type='email'] {
 
 ::placeholder {
   opacity: 0.4;
-  color: $fg;
+  color: black;
 }
 
 $rangeHeight: 0.75rem;
@@ -73,7 +72,7 @@ input[type='range'] {
   cursor: pointer;
   border: 1px solid $fg;
 
-  box-shadow: -407px 0 0 400px $lightBg;
+  box-shadow: -407px 0 0 400px $darkBg;
 }
 
 @mixin hiddenScroll() {

@@ -92,8 +92,8 @@ const counties = [
   <div class="constrain">
     <h1>Email Notifications</h1>
     <p>
-      Sign up to recieve email notifications when Sewage levels in your area
-      exceed a safe threshold.
+      Sign up to recieve email notifications when the sewage in your area
+      exceeds a safe threshold of COVID levels.
     </p>
     <div class="form">
       <input type="email" v-model="email" placeholder="Email" />
@@ -156,4 +156,5 @@ label,
   flex-direction: column;
   align-items: stretch;
 }
+
 </style>
