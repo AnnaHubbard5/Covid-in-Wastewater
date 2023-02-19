@@ -1,9 +1,10 @@
 @use 'sass:color';
 
-$bg: hsl(215, 100%, 92%);
-$fg: hsl(0, 0%, 100%);
+$bg: #d1dbed;
+$fg: #ECEFF4;
 $lightBg: color.mix($fg, $bg, 20%);
 $darkBg: color.mix(black, $bg, 50%);
+$headerbg: #2E3440;
 $textWidth: 480pt;
 
 :root {

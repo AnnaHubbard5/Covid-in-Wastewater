@@ -18,7 +18,7 @@ nav {
   padding: 1.5rem;
   font-size: 20px;
   font-weight: bold;
-  background-color: hsla(0, 4%, 19%, 0.876);
+  background-color: $headerbg;
   text-align: center;
 }
 
