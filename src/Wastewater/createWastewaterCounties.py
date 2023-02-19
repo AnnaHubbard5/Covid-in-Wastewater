@@ -33,6 +33,8 @@ def ret_object_for_Chris(county_name):
             date_start = result['date_start']
             try:
                 percentile = float(result.get('percentile'))
+                if percentile > 100:
+                    continue
             except:
                 continue
 
