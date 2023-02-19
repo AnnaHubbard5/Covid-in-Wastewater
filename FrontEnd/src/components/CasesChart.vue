@@ -15,7 +15,7 @@ const canvas = ref<null | HTMLCanvasElement>(null)
 
 type WaterTests = {
   [plantId: string]: {
-    [date: string]: number
+    [date: number]: number
   }
 }
 
@@ -63,9 +63,12 @@ async function setData() {
   console.log({ allCases })
   const cases = allCases[props.county + ' County']
 
-  let dates = Object.keys(Object.values(waterTests)[0]).map(a => fmtDate(a))
+  let dates = Object.keys(Object.values(waterTests)[0]).map(a => {
+    console.log({ a })
+    return new Date(parseInt(a) * 1000)
+  })
 
-  chart.data.labels = dates.map(a => formatDate(a, 'MMM d, y'))
+  // chart.data.labels = dates.map(a => formatDate(a, 'MMM d, y'))
 
   chart.data.datasets = [
     {
@@ -74,20 +77,23 @@ async function setData() {
       backgroundColor: colors.red,
       // @ts-ignore
       data: Object.entries(cases)
-        .sort((a, b) => b[0] - a[0])
-        .map(([date, val]) => ({
-          x: date,
-          y: val * 10,
+        .sort((a, b) => a[0] - b[0])
+        .map(val => ({
+          x: val[0] / 1000,
+          y: val[1] * 10,
         })),
     },
 
     // @ts-ignore
     ...Object.entries(waterTests).map(([plantName, plant]) => ({
       label: 'Waste Water Quality at plant ' + plantName,
-      data: Object.entries(plant).map(([date, val]) => ({
-        x: fmtDate(date),
-        y: val,
-      })),
+      data: Object.entries(plant).map(([date, val]) => {
+        console.log(date)
+        return {
+          x: new Date(parseInt(date)).getTime(),
+          y: val,
+        }
+      }),
     })),
   ]
 

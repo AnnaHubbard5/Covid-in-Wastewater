@@ -7,41 +7,53 @@ const focusedCounty = ref('')
 </script>
 
 <template>
-  <section>
-    <div class="constrain">
-      <h1>Current Data</h1>
-    </div>
-    <DeckGL v-model="focusedCounty" />
-  </section>
+  <div class="container">
+    <section>
+      <div class="constrain">
+        <h1>Current COVID Sewage Levels</h1>
+      </div>
+      <div class="canvas-container">
+        <DeckGL v-model="focusedCounty" />
+      </div>
+    </section>
 
-  <section v-if="focusedCounty" class="county-data">
-    <div class="constrain">
-      <h1>History for COVID Content in {{ focusedCounty }} County Sewers</h1>
-    </div>
-    <Suspense>
-      <CasesChart :county="focusedCounty" />
-    </Suspense>
-  </section>
+    <section v-if="focusedCounty" class="county-data">
+      <div class="constrain">
+        <h1>History for COVID Content in {{ focusedCounty }} County Sewers</h1>
+      </div>
+      <Suspense>
+        <div class="canvas-container">
+          <CasesChart :county="focusedCounty" />
+        </div>
+      </Suspense>
+    </section>
+  </div>
 </template>
 
 <style scoped lang="scss">
-section {
-  height: 70vh;
+.container {
+  padding: 2rem;
+}
+
+.canvas-container {
   position: relative;
-  padding-left: 1.5rem;
+  height: 70vh;
+}
+section {
+  position: relative;
   text-align: header;
   font-size: $textSize;
   width: 100%;
   max-width: 960pt;
-  margin: 2rem auto;
-}
-
-h1 {
-  text-align: center;
+  margin: 0 auto;
 }
 
 canvas {
   border: 2px solid $medium;
   border-radius: 0.5rem;
+}
+
+h1 {
+  text-align: center;
 }
 </style>
