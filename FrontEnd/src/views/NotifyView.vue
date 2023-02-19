@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { filename } from '@loaders.gl/loader-utils/dist/lib/path-utils/path';
 import qs from 'qs'
 import { computed, ref } from 'vue'
-import Meter from '../components/Meter.vue';
+import Meter from '../components/Meter.vue'
 
 const email = ref('')
 const county = ref('Select County')
 const threshold = ref(60)
-const meterShown = ref(0);
+const meterShown = ref(0)
+
+const error = ref('')
+const dataSent = ref(false)
+const sendingData = ref(false)
 
 const formIsValid = computed(() => {
   return (
@@ -19,12 +22,15 @@ const formIsValid = computed(() => {
 })
 
 const submit = async () => {
-  var arg = email.value + "," + county.value + "," + threshold.value;
+  if (sendingData.value) return
 
-  var url = "http://127.0.0.1:5000/";
+  sendingData.value = true
 
-  await fetch(
-    url + "?"+
+  var url = 'http://127.0.0.1:5000/'
+
+  const req = await fetch(
+    url +
+      '?' +
       qs.stringify({
         email: email.value,
         county: county.value,
@@ -32,15 +38,15 @@ const submit = async () => {
       })
   )
 
-      const res1 = await fetch('http://127.0.0.1:5000/jsonfile?' + qs.stringify({ county: county.value }))
-      const json = (await res1.json())[county.value]
-      const firstPlantData = Object.values(json)[0] as number[]
-      const mostRecentData = Object.values(firstPlantData)[Object.values(firstPlantData).length - 1]
-      meterShown.value = mostRecentData
+  const json = await req.json()
 
-  // .then(response => response.text())
-  // .then(data => console.log(data))
-  // .catch(error => console.error(error));
+  if ('error' in json) {
+    error.value = json.error
+  } else {
+    dataSent.value = true
+  }
+
+  sendingData.value = false
 }
 
 const counties = [
@@ -107,35 +113,45 @@ const counties = [
 
 <template>
   <div class="constrain">
-    <h1>Email Notifications</h1>
-    <p>
-      Sign up to recieve email notifications when the sewage in your area
-      exceeds a safe threshold of COVID levels.
-    </p>
-    <div class="form">
-      <input type="email" v-model="email" placeholder="Email" />
-
-      <select v-model="county">
-        <option value="Select County" disabled selected hidden>County</option>
-        <option v-for="c in counties" :value="c">{{ c }}, CA</option>
-      </select>
-
-      <label>
-        <span>Threshold</span>
-        <div class="range">
-          <input type="range" v-model="threshold" min="0" max="100" />
-          <span class="val">{{ threshold }}%</span>
-        </div>
-      </label>
-
-      <input
-        type="submit"
-        value="Submit"
-        :disabled="!formIsValid"
-        @click="submit" 
-      />
+    <div v-if="dataSent" class="success">
+      <p>Success! You will now recieve emails.</p>
     </div>
-    <Meter v-if="meterShown" :val="meterShown" :min="0" :max="100" />
+
+    <template v-else>
+      <h1>Email Notifications</h1>
+      <p>
+        Sign up to recieve email notifications when the sewage in your area
+        exceeds a safe threshold of COVID levels.
+      </p>
+      <div class="form">
+        <input type="email" v-model="email" placeholder="Email" />
+
+        <select v-model="county">
+          <option value="Select County" disabled selected hidden>County</option>
+          <option v-for="c in counties" :value="c">{{ c }}, CA</option>
+        </select>
+
+        <label>
+          <span>Threshold</span>
+          <div class="range">
+            <input type="range" v-model="threshold" min="0" max="100" />
+            <span class="val">{{ threshold }}%</span>
+          </div>
+        </label>
+
+        <input
+          type="submit"
+          :value="sendingData ? 'Loading...' : 'Submit'"
+          :disabled="!formIsValid"
+          @click="submit"
+        />
+      </div>
+      <!-- <Meter v-if="meterShown" :val="meterShown" :min="0" :max="100" /> -->
+
+      <div class="error" v-if="error">
+        <p><b>Error:</b> {{ error }}</p>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -175,4 +191,27 @@ label,
   align-items: stretch;
 }
 
+.success {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid $green;
+  background: rgba($color: $green, $alpha: 0.3);
+  /* color: $green; */
+  color: black;
+  margin-top: 1rem;
+  > * {
+    margin: 0;
+  }
+}
+.error {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid $red;
+  background: rgba($color: $red, $alpha: 0.3);
+  color: $red;
+  margin-top: 1rem;
+  > * {
+    margin: 0;
+  }
+}
 </style>

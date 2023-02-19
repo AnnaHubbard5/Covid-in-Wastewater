@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import getCases from '@/scripts/cases'
 import qs from 'qs'
-import Chart from 'chart.js/auto'
+import Chart, { Point } from 'chart.js/auto'
 import { format as formatDate } from 'date-fns'
 import { onMounted, ref, watch } from 'vue'
 import colors from '@/scripts/colors'
@@ -37,13 +38,18 @@ async function setData() {
   )
   const waterTests: WaterTests = (await res1.json())[props.county]
 
+  const allCases = await getCases()
+  console.log({ allCases })
+  const cases = allCases[props.county + ' County']
+
   let dates: string[] = []
-  // for (let i = 0; i < Object.keys(covidCases).length; i++) {
-  //   const date = Object.keys(covidCases)[i]
-  //   if (!(date in dates)) {
-  //     dates.push(date)
-  //   }
-  // }
+  for (let i = 0; i < Object.keys(cases).length; i++) {
+    const date = Object.keys(cases)[i]
+    if (!(date in dates)) {
+      dates.push(date)
+    }
+  }
+
   for (let i = 0; i < Object.values(waterTests).length; i++) {
     const plant = Object.values(waterTests)[i]
     for (let j = 0; j < Object.keys(plant).length; j++) {
@@ -53,12 +59,40 @@ async function setData() {
       }
     }
   }
+  console.log(dates)
 
-  dates = dates.map(a => formatDate(new Date(a), 'MMM d, y'))
-  chart.data.labels = dates
+  // FIll missing entries in the cases data
+  for (let i = 0; i < dates.length; i++) {
+    const date = dates[i]
+
+    let j = i
+    while (!cases[date] && j < dates.length) {
+      // if (j == dates.length - 1) {
+      //   j = 0
+      // }
+      cases[date] = cases[dates[j]]
+      j++
+    }
+
+    let k = i
+    for (let i = 0; i < Object.keys(waterTests).length; i++) {
+      const plant = Object.keys(waterTests)[i]
+
+      while (!waterTests[plant][date] && k < dates.length) {
+        waterTests[plant][date] = waterTests[plant][dates[k]] ?? undefined
+        k++
+      }
+    }
+  }
+
+  chart.data.labels = dates.map(a => new Date(a).getTime())
 
   chart.data.datasets = [
     // Covid cases
+    {
+      label: 'Cases in ' + props.county,
+      data: Object.values(cases).map(a => a * 10),
+    },
 
     // Test results for each water treatment plant
     ...Object.entries(waterTests).map(([plantName, plant]) => ({

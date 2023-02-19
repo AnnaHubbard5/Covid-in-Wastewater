@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CasesChart from '../components/CasesChart.vue'
 import DeckGL from '../components/DeckGL.vue'
-import { ref } from 'vue'
+import { ref, Suspense } from 'vue'
 
 const focusedCounty = ref('')
 </script>
@@ -13,7 +13,9 @@ const focusedCounty = ref('')
 
   <section v-if="focusedCounty" class="county-data">
     <h1>{{ focusedCounty }}</h1>
-    <CasesChart :county="focusedCounty" />
+    <Suspense>
+      <CasesChart :county="focusedCounty" />
+    </Suspense>
   </section>
 </template>
 
