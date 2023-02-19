@@ -12,9 +12,9 @@ const AIR_PORTS =
   'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson'
 
 const INITIAL_VIEW_STATE = {
-  latitude: 38.58,
-  longitude: -121.5,
-  zoom: 4,
+  latitude: 36,
+  longitude: -120.5,
+  zoom: 5.25,
   bearing: 0,
   pitch: 30,
 }
