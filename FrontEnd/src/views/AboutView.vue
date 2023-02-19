@@ -4,7 +4,6 @@ import Meter from '../components/Meter.vue';
 <template>
 
 <body>
-  <Meter :min="0" :max="10" :val="3" />
   <div class="about">
   <h1>Why does this matter?</h1>
   <p>
