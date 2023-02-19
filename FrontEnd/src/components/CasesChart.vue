@@ -8,6 +8,9 @@ import colors from '@/scripts/colors'
 
 const props = defineProps<{ county: string }>()
 
+// const fmtDate = (date: string | Date) => formatDate(new Date(date), 'MMM d, y')
+const fmtDate = (date: string | Date) => new Date(date).getTime()
+
 const canvas = ref<null | HTMLCanvasElement>(null)
 
 type WaterTests = {
@@ -24,7 +27,13 @@ let chart: Chart
 function initChart() {
   if (!canvas.value) throw new Error('Canvas is not defined')
   chart = new Chart(canvas.value, {
-    type: 'line',
+    type: 'scatter',
+    options: {
+      color: colors.medium + (50).toString(16),
+      backgroundColor: 'rgba(0,0,0,0)',
+      showLine: true,
+      borderColor: colors.medium + (50).toString(16),
+    },
     data: {
       labels: [] as string[],
       datasets: [],
@@ -42,62 +51,31 @@ async function setData() {
   console.log({ allCases })
   const cases = allCases[props.county + ' County']
 
-  let dates: string[] = []
-  for (let i = 0; i < Object.keys(cases).length; i++) {
-    const date = Object.keys(cases)[i]
-    if (!(date in dates)) {
-      dates.push(date)
-    }
-  }
+  let dates = Object.keys(Object.values(waterTests)[0]).map(a => fmtDate(a))
 
-  for (let i = 0; i < Object.values(waterTests).length; i++) {
-    const plant = Object.values(waterTests)[i]
-    for (let j = 0; j < Object.keys(plant).length; j++) {
-      const date = Object.keys(plant)[j]
-      if (!(date in dates)) {
-        dates.push(date)
-      }
-    }
-  }
-  console.log(dates)
-
-  // FIll missing entries in the cases data
-  for (let i = 0; i < dates.length; i++) {
-    const date = dates[i]
-
-    let j = i
-    while (!cases[date] && j < dates.length) {
-      // if (j == dates.length - 1) {
-      //   j = 0
-      // }
-      cases[date] = cases[dates[j]]
-      j++
-    }
-
-    let k = i
-    for (let i = 0; i < Object.keys(waterTests).length; i++) {
-      const plant = Object.keys(waterTests)[i]
-
-      while (!waterTests[plant][date] && k < dates.length) {
-        waterTests[plant][date] = waterTests[plant][dates[k]] ?? undefined
-        k++
-      }
-    }
-  }
-
-  chart.data.labels = dates.map(a => new Date(a).getTime())
+  chart.data.labels = dates.map(a => formatDate(a, 'MMM d, y'))
 
   chart.data.datasets = [
-    // Covid cases
     {
-      label: 'Cases in ' + props.county,
-      data: Object.values(cases).map(a => a * 10),
+      label: 'Cases per 1m in ' + props.county,
+      borderColor: colors.red,
+      backgroundColor: colors.red,
+      // @ts-ignore
+      data: Object.entries(cases)
+        .sort((a, b) => b[0] - a[0])
+        .map(([date, val]) => ({
+          x: date,
+          y: val * 10,
+        })),
     },
 
-    // Test results for each water treatment plant
+    // @ts-ignore
     ...Object.entries(waterTests).map(([plantName, plant]) => ({
       label: 'Waste Water Quality at plant ' + plantName,
-      data: Object.values(plant),
+      data: Object.entries(plant).map(([date, val]) => ({
+        x: fmtDate(date),
+        y: val,
+      })),
     })),
   ]
 

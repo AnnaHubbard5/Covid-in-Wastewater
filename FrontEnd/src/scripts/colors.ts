@@ -9,6 +9,7 @@ const colors = {
   darkest: '#3b4252',
   darker: '#434c5e',
   dark: '#4c566a',
+  medium: '#767f90',
   light: '#d8dee9',
   lighter: '#e5e9f0',
   lightest: '#eceff4',
