@@ -46,11 +46,6 @@ function getGradientColor(value: number): Uint8Array{
   return Uint8Array.from([r, g, b, 255]);
 }
 
-function isClickable(value: number): boolean{
-  if (value == -1) 
-    return false
-  return true;
-}
 
 
 onMounted(() => {
@@ -81,7 +76,7 @@ onMounted(() => {
         getLineColor: [139,0,0],//(d: any) => getGradientColor(d.properties.percentile),
         // (d: any) => d.properties?.percentile ? getGradientColor(d.properties.percentile) : [0, 0, 0],
         getFillColor: (d: any) => getGradientColor(d.properties.percentile),
-        pickable: (d: any) => {return d.properties.percentile == -1 ? false : true},
+        pickable: (d: any) => (d.properties.percentile !== -1),
         autoHighlight: true,
         onClick: info => {
           emit('update:modelValue', info.object.properties.name)
