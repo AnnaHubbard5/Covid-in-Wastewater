@@ -7,7 +7,6 @@
     <router-link to="/about">About</router-link>
     <router-link to="/notify">Get Notified</router-link>
     <div class="spacer"></div>
-    <router-link to="/about">Get Notified</router-link>
   </nav>
 </template>
 
