@@ -7,12 +7,11 @@ const props = defineProps<{ modelValue: string }>()
 const emit = defineEmits(['update:modelValue'])
 
 // source: Natural Earth http://www.naturalearthdata.com/ via geojson.xyz
-const CALIFORNIA_COUNTIES = '/data/california-counties-prop.json' //'../public/data/california-counties.json'
+const CALIFORNIA_COUNTIES = '/data/california-counties.json' //'../public/data/california-counties.json'
 
 const COUNTRIES =
   'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_scale_rank.geojson' //eslint-disable-line
-const AIR_PORTS =
-  'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson'
+
 
 const INITIAL_VIEW_STATE = {
   latitude: 36,
@@ -28,21 +27,21 @@ function getGradientColor(value: number): Uint8Array{
     return Uint8Array.from([210,105,30, 255])
   var distance = value / 100
   // Calculate the color based on the distance
-  if (distance < 0.2) {
+  if (distance < 0.3) {
     // Green to yellow gradient
-    var r = Math.floor(255 * (distance / 0.2));
+    var r = Math.floor(255 * (distance / 4));
     var g = 255;
     var b = 0;
-  } else if (distance < 0.6) {
+  } else if (distance < 0.45) {
     // Yellow to orange gradient
-    var r = 255;
-    var g = Math.floor(255 * ((distance - 0.2) / 0.4));
+    var r = Math.floor(255 * distance);
+    var g = 244;
     var b = 0;
   } else {
     // Orange to red gradient
     var r = 255;
-    var g = Math.floor(255 * ((distance - 0.6) / 0.4));
-    var b = Math.floor(255 * ((distance - 0.6) / 0.4));
+    var g = Math.floor(255 *  0.4);
+    var b = 0;
   }
   return Uint8Array.from([r, g, b, 255]);
 }
@@ -80,7 +79,7 @@ onMounted(() => {
         pickable: true,
         autoHighlight: true,
         onClick: info => {
-          emit('update:modelValue', info.object.properties.name)
+          emit('update:modelValue', info.object.properties.name + ": " + info.object.properties.percentile)
         },
       }),
     ],
