@@ -23,5 +23,8 @@ const focusedCounty = ref('')
 section {
   height: 80vh;
   position: relative;
+  padding-left: 1.5rem;
+  text-align:header;
+  font-size: $textSize;
 }
 </style>
