@@ -1,22 +1,25 @@
 <script setup lang="ts">
+import CasesChart from '../components/CasesChart.vue'
 import DeckGL from '../components/DeckGL.vue'
+import { ref } from 'vue'
+
+const focusedCounty = ref('')
 </script>
 
 <template>
-  <DeckGL />
+  <section>
+    <DeckGL v-model="focusedCounty" />
+  </section>
+
+  <section v-if="focusedCounty" class="county-data">
+    <h1>{{ focusedCounty }}</h1>
+    <CasesChart :county="focusedCounty" />
+  </section>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+<style scoped lang="scss">
+section {
+  height: 80vh;
+  position: relative;
 }
 </style>

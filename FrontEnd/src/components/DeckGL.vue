@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { Deck } from '@deck.gl/core/typed'
 import { GeoJsonLayer, ArcLayer, PolygonLayer } from '@deck.gl/layers/typed'
-import { onMounted } from 'vue';
+import { onMounted } from 'vue'
+
+const props = defineProps<{ modelValue: string }>()
+const emit = defineEmits(['update:modelValue'])
 
 // source: Natural Earth http://www.naturalearthdata.com/ via geojson.xyz
 const CALIFORNIA_COUNTIES = '/data/california-counties.json' //'../public/data/california-counties.json'
 
-const COUNTRIES = 
+const COUNTRIES =
   'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_scale_rank.geojson' //eslint-disable-line
 const AIR_PORTS =
   'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson'
@@ -23,7 +26,7 @@ onMounted(() => {
   const deck = new Deck({
     initialViewState: INITIAL_VIEW_STATE,
     controller: true,
-    canvas: "deck-canvas",
+    canvas: 'deck-canvas',
     layers: [
       new GeoJsonLayer({
         id: 'base-map',
@@ -48,18 +51,15 @@ onMounted(() => {
         getFillColor: [139, 0, 0],
         pickable: true,
         autoHighlight: true,
-        onClick: info =>
-          // eslint-disable-next-line
-          info.object &&
-          alert(
-            `${info.object.properties.name}`
-          ),
-      })   
+        onClick: info => {
+          emit('update:modelValue', info.object.properties.name)
+        },
+      }),
     ],
   })
 })
 </script>
 
 <template>
-  <canvas id="deck-canvas"></canvas>
+  <canvas id="deck-canvas" />
 </template>
